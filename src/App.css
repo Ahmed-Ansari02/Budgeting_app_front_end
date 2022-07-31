@@ -1,0 +1,20 @@
+.App {
+  background-color: #282c34;
+  display: grid;
+  width: 100vw;
+  height: 100%;
+  grid-template-columns: 1fr;
+  grid-template-rows: 4fr 96fr;
+}
+.app_screen {
+  height: 100%;
+  margin-bottom: 100px;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 800px) {
+  .app_screen{
+    overflow: scroll;
+    
+  }
+}
