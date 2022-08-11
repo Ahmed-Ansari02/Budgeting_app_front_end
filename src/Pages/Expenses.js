@@ -12,6 +12,7 @@ import Loading_screen from "../components/Expenses_components/Loading_screen";
 
 let item_list_db_json = [];
 let line_graph_data_db_json = [];
+const server_url = "https://budgetting-app-server.herokuapp.com/";
 function Expenses({ User }) {
   const [Loaded, setLoaded] = useState(false);
   const [BudgetList, setBudgetList] = useState([]);
@@ -28,15 +29,12 @@ function Expenses({ User }) {
     } else if (Item_remove_id_list.length === 0) {
       setrenderDel(false);
     }
-   
   }, [Item_remove_id_list]);
 
   async function get_dbdata() {
     let current_month = new Date().getMonth() + 1;
     let last_month = current_month - 1;
-    let item_list_db = await fetch(
-      `https://budget-app-server1234.azurewebsites.net/fetch_data/${User.sub}`
-    );
+    let item_list_db = await fetch(`${server_url}/fetch_data/${User.sub}`);
     item_list_db_json = await item_list_db.json();
 
     item_list_db_json.map((item) => {
@@ -50,19 +48,19 @@ function Expenses({ User }) {
     setBudgetList(item_list_db_json);
 
     let summary_data_db = await fetch(
-      `https://budget-app-server1234.azurewebsites.net/summarydata/${current_month}/${last_month}/${User.sub}`
+      `${server_url}/summarydata/${current_month}/${last_month}/${User.sub}`
     );
     let summary_data_db_json = await summary_data_db.json();
     setSummaryData(summary_data_db_json);
 
     let line_graph_data_db = await fetch(
-      `https://budget-app-server1234.azurewebsites.net/linegraphdata/${User.sub}`
+      `${server_url}/linegraphdata/${User.sub}`
     );
     line_graph_data_db_json = await line_graph_data_db.json();
     calc_avg(line_graph_data_db_json);
     setLineGraphData(line_graph_data_db_json);
     let bar_graph_data = await fetch(
-      `https://budget-app-server1234.azurewebsites.net/categorydata/${current_month}/${User.sub}`
+      `${server_url}/categorydata/${current_month}/${User.sub}`
     );
     let bar_graph_data_json = await bar_graph_data.json();
     setBarGraphData(bar_graph_data_json);
@@ -101,17 +99,14 @@ function Expenses({ User }) {
   }
 
   async function remove_budget_item(id) {
-    let delete_req = await fetch(
-      `https://budget-app-server1234.azurewebsites.net/deleteitem/${id}/${User.sub}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "DELETE",
-        mode: "cors",
-        body: JSON.stringify(Item_remove_id_list),
-      }
-    );
+    let delete_req = await fetch(`${server_url}/deleteitem/${id}/${User.sub}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "DELETE",
+      mode: "cors",
+      body: JSON.stringify(Item_remove_id_list),
+    });
 
     if (delete_req.status === 200) {
       get_dbdata();
@@ -130,7 +125,7 @@ function Expenses({ User }) {
   }
   async function delete_btn_handler() {
     let delete_req = await fetch(
-      `https://budget-app-server1234.azurewebsites.net/deleteitem_multiples/${User.sub}`,
+      `${server_url}/deleteitem_multiples/${User.sub}`,
       {
         headers: {
           "Content-Type": "application/json",
