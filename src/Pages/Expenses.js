@@ -12,7 +12,7 @@ import Loading_screen from "../components/Expenses_components/Loading_screen";
 
 let item_list_db_json = [];
 let line_graph_data_db_json = [];
-const server_url = "https://budgetting-app-server.herokuapp.com/";
+const server_url = "https://budgetting-app-server.herokuapp.com";
 function Expenses({ User }) {
   const [Loaded, setLoaded] = useState(false);
   const [BudgetList, setBudgetList] = useState([]);
