@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { motion } from "framer-motion";
 
-const server_url = "https://budgetting-app-server.herokuapp.com/";
+const server_url = "https://budgetting-app-server.herokuapp.com";
 
 function Main_page({ User }) {
   const [ListItem, setListItem] = useState([]);
